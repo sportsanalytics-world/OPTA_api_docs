@@ -1,0 +1,27 @@
+# Cursor Rules for OPTA API Documentation MCP Server
+
+## Code Language
+- All source code must be written in English
+- Comments, variable names, function names, and documentation should be in English
+- Only user-facing messages and README can be in Spanish
+
+## Code Style
+- Use TypeScript for all source files
+- Follow ESLint and Prettier standards
+- Use meaningful variable and function names
+- Add JSDoc comments for public functions and classes
+
+## Project Structure
+- Keep the existing directory structure
+- Place new files in appropriate directories
+- Use index.ts files for clean exports
+
+## MCP Server Guidelines
+- All MCP tool names should be descriptive and in English
+- Error messages should be clear and informative
+- Log messages should be in English for debugging purposes
+
+## Documentation
+- README.md can be in Spanish for user convenience
+- Code comments and JSDoc should be in English
+- API documentation should be in English 

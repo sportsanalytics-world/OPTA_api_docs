@@ -1,0 +1,2 @@
+# This file ensures the tests directory is tracked by git
+# The Endpoint Detector Agent will generate test files in this directory 
