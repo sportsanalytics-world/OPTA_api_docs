@@ -10,7 +10,8 @@
     "dev": "tsx src/index.ts",
     "test": "jest",
     "test:opta": "tsx src/test.ts",
-    "analyze:endpoints": "tsx src/scripts/analyzeEndpoints.ts"
+    "analyze:endpoints": "tsx src/scripts/analyzeEndpoints.ts",
+    "agent:run": "tsx src/scripts/agentRunner.ts"
   },
   "keywords": ["mcp", "opta", "api", "documentation", "football"],
   "author": "",
