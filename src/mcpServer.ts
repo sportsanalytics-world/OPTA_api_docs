@@ -14,6 +14,33 @@ const server = new Server(
   {
     name: 'opta-api-docs-mcp',
     version: '1.0.0',
+  },
+  {
+    capabilities: {
+      tools: {
+        listChanged: false,
+        tools: [
+          {
+            name: 'get_endpoint_documentation',
+            description: 'Get the HTML documentation content for a specific OPTA endpoint and answer questions about it',
+            inputSchema: {
+              type: 'object',
+              properties: {
+                endpoint_code: {
+                  type: 'string',
+                  description: 'The endpoint code (e.g., MA13, MA1, PE2, etc.)',
+                },
+                question: {
+                  type: 'string',
+                  description: 'Question about the endpoint documentation (e.g., "What is the overview?", "What are the parameters?", etc.)',
+                },
+              },
+              required: ['endpoint_code', 'question'],
+            },
+          },
+        ],
+      },
+    },
   }
 );
 

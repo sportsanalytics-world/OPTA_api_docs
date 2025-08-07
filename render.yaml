@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: opta-api-docs-mcp
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPTA_USERNAME
+        sync: false
+      - key: OPTA_PASSWORD
+        sync: false
+      - key: OPTA_DOCS_BASE_URL
+        value: https://docs.performgroup.com/docs/rh/sdapi
+    autoDeploy: true
