@@ -57,7 +57,7 @@ npm run process:endpoints
 
 ## Herramientas MCP Disponibles
 
-### 1. `get_endpoint_documentation`
+### `get_endpoint_documentation`
 Obtiene la documentación HTML de un endpoint específico de OPTA y responde preguntas sobre ella.
 
 **Parámetros:**
@@ -71,51 +71,6 @@ Obtiene la documentación HTML de un endpoint específico de OPTA y responde pre
   "question": "What is the overview of this endpoint?"
 }
 ```
-
-### 2. `search_opta_documentation`
-Busca en toda la documentación de OPTA por términos específicos.
-
-**Parámetros:**
-- `query` (string): Términos de búsqueda
-
-**Ejemplo:**
-```json
-{
-  "query": "possession events"
-}
-```
-
-### 3. `get_endpoint_details`
-Obtiene detalles completos de un endpoint específico.
-
-**Parámetros:**
-- `url` (string): URL del endpoint de OPTA
-
-**Ejemplo:**
-```json
-{
-  "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-possession-events.htm"
-}
-```
-
-### 4. `list_all_endpoints`
-Lista todos los endpoints disponibles.
-
-**Parámetros:**
-- `category` (string, opcional): Filtrar por categoría
-
-**Ejemplo:**
-```json
-{
-  "category": "soccer"
-}
-```
-
-### 5. `refresh_documentation_cache`
-Actualiza el cache de documentación.
-
-### 6. `get_cache_status`
-Obtiene el estado actual del cache.
 
 ## Configuración en Cursor
 
@@ -212,22 +167,6 @@ curl -X POST http://localhost:3000/mcp \
   }'
 ```
 
-### Buscar en la Documentación
-```bash
-# Buscar información sobre posesión
-curl -X POST http://localhost:3000/mcp \
-  -H "Content-Type: application/json" \
-  -d '{
-    "method": "tools/call",
-    "params": {
-      "name": "search_opta_documentation",
-      "arguments": {
-        "query": "possession events"
-      }
-    }
-  }'
-```
-
 ## Desarrollo
 
 ### Agregar Nuevos Endpoints
@@ -244,7 +183,6 @@ Puedes modificar la lógica de búsqueda en `src/services/documentationManager.t
 - `npm run dev`: Ejecuta en modo desarrollo
 - `npm start`: Ejecuta en modo producción
 - `npm run process:endpoints`: Procesa y actualiza los endpoints
-- `npm run test:opta`: Ejecuta pruebas del servidor MCP
 
 ## Troubleshooting
 
