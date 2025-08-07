@@ -34,7 +34,7 @@ export class EndpointDiscovery {
         const loc = $(element).find('loc').text();
         const lastmod = $(element).find('lastmod').text();
         
-        if (loc.includes('/docs/rh/sdapi/') && loc.includes('.htm')) {
+        if (loc.includes('/Topics/') && loc.includes('.htm')) {
           const url = loc.replace(this.baseUrl, '');
           const name = this.extractNameFromUrl(url);
           const category = this.extractCategoryFromUrl(url);
@@ -72,7 +72,7 @@ export class EndpointDiscovery {
         const href = $(element).attr('href');
         const text = $(element).text().trim();
         
-        if (href && href.includes('/docs/rh/sdapi/') && text) {
+        if (href && href.includes('/Topics/') && text) {
           const url = href.startsWith('http') ? href.replace(this.baseUrl, '') : href;
           const name = text || this.extractNameFromUrl(url);
           const category = this.extractCategoryFromUrl(url);

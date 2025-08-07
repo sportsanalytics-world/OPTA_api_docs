@@ -1,0 +1,644 @@
+{
+  "timestamp": "2025-08-06T23:06:37.344Z",
+  "totalEndpoints": 92,
+  "categories": [
+    "soccer"
+  ],
+  "endpoints": [
+    {
+      "name": "Soccer Coverage Tiers",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-coverage-tiers.htm",
+      "category": "soccer",
+      "description": "Documentación para Soccer Coverage Tiers"
+    },
+    {
+      "name": "Tournament Schedule (MA0)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-tournament-schedule.htm",
+      "category": "soccer",
+      "description": "Documentación para Tournament Schedule (MA0)",
+      "code": "MA0"
+    },
+    {
+      "name": " Fixtures And Results (MA1)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-fixtures-and-results.htm",
+      "category": "soccer",
+      "description": "Documentación para  Fixtures And Results (MA1)",
+      "code": "MA1"
+    },
+    {
+      "name": "Fixtures and Results (MA1_Detailed)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-fixtures-and-results-detailed.html",
+      "category": "soccer",
+      "description": "Documentación para Fixtures and Results (MA1_Detailed)"
+    },
+    {
+      "name": "Match Stats (MA2)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-statistics.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Stats (MA2)",
+      "code": "MA2"
+    },
+    {
+      "name": "Match Events (MA3)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-events.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Events (MA3)",
+      "code": "MA3"
+    },
+    {
+      "name": "Pass Matrix and Average Formation (MA4)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-pass-matrix.htm",
+      "category": "soccer",
+      "description": "Documentación para Pass Matrix and Average Formation (MA4)",
+      "code": "MA4"
+    },
+    {
+      "name": "Possession (MA5)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-possession.htm",
+      "category": "soccer",
+      "description": "Documentación para Possession (MA5)",
+      "code": "MA5"
+    },
+    {
+      "name": "Commentary (MA6)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-commentary.htm",
+      "category": "soccer",
+      "description": "Documentación para Commentary (MA6)",
+      "code": "MA6"
+    },
+    {
+      "name": "Match Preview (MA8)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-preview.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Preview (MA8)",
+      "code": "MA8"
+    },
+    {
+      "name": "Match Facts (MA9)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-facts.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Facts (MA9)",
+      "code": "MA9"
+    },
+    {
+      "name": "Match Expected Goals (MA12)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-expected-goals.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Expected Goals (MA12)",
+      "code": "MA12"
+    },
+    {
+      "name": "Possession Events (MA13)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-possession-events.htm",
+      "category": "soccer",
+      "description": "Documentación para Possession Events (MA13)",
+      "code": "MA13"
+    },
+    {
+      "name": "Automated Betting facts (MA15)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-automated-betting-facts.html",
+      "category": "soccer",
+      "description": "Documentación para Automated Betting facts (MA15)",
+      "code": "MA15"
+    },
+    {
+      "name": "Match Facts (All) (MA16)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-facts-all.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Facts (All) (MA16)",
+      "code": "MA16"
+    },
+    {
+      "name": "Match Stats Point (MA17)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-points.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Stats Point (MA17)",
+      "code": "MA17"
+    },
+    {
+      "name": "Match Penalties Preview (MA19)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-penalties-preview.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Penalties Preview (MA19)",
+      "code": "MA19"
+    },
+    {
+      "name": "Match Player Ratings (MA20)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-player-ratings.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Player Ratings (MA20)",
+      "code": "MA20"
+    },
+    {
+      "name": "Live Win Probability (MA21)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-live-win-probability.htm",
+      "category": "soccer",
+      "description": "Documentación para Live Win Probability (MA21)",
+      "code": "MA21"
+    },
+    {
+      "name": "NLG Match Preview (MA22)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-nlg-match-preview.htm",
+      "category": "soccer",
+      "description": "Documentación para NLG Match Preview (MA22)",
+      "code": "MA22"
+    },
+    {
+      "name": "Automated Insights (MA23)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-automated-insights.htm",
+      "category": "soccer",
+      "description": "Documentación para Automated Insights (MA23)",
+      "code": "MA23"
+    },
+    {
+      "name": "Match Fitness (MA24)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-fitness.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Fitness (MA24)",
+      "code": "MA24"
+    },
+    {
+      "name": "Match Tracking (MA25)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-tracking.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Tracking (MA25)",
+      "code": "MA25"
+    },
+    {
+      "name": "NLG Match Recap (MA26)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-nlg-match-recap.htm",
+      "category": "soccer",
+      "description": "Documentación para NLG Match Recap (MA26)",
+      "code": "MA26"
+    },
+    {
+      "name": "Match Momentum (MA27)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-momentum.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Momentum (MA27)",
+      "code": "MA27"
+    },
+    {
+      "name": "Match Possession Value (MA30)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-possession-value.html",
+      "category": "soccer",
+      "description": "Documentación para Match Possession Value (MA30)",
+      "code": "MA30"
+    },
+    {
+      "name": "TV Listing (MA31)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-tv-listing.htm",
+      "category": "soccer",
+      "description": "Documentación para TV Listing (MA31)",
+      "code": "MA31"
+    },
+    {
+      "name": "Match Events Possession Value (MA32)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-events-possession-value.html",
+      "category": "soccer",
+      "description": "Documentación para Match Events Possession Value (MA32)",
+      "code": "MA32"
+    },
+    {
+      "name": "In-venue Shape (MA33)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-in-venue-shape.html",
+      "category": "soccer",
+      "description": "Documentación para In-venue Shape (MA33)",
+      "code": "MA33"
+    },
+    {
+      "name": "Remote Shape (MA34)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-remote-shape.html",
+      "category": "soccer",
+      "description": "Documentación para Remote Shape (MA34)",
+      "code": "MA34"
+    },
+    {
+      "name": "Remote Enriched Events (MA35)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-remote-enriched-events.htm",
+      "category": "soccer",
+      "description": "Documentación para Remote Enriched Events (MA35)",
+      "code": "MA35"
+    },
+    {
+      "name": "In-venue Enriched Events (MA36)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-in-venue-enriched-events.htm",
+      "category": "soccer",
+      "description": "Documentación para In-venue Enriched Events (MA36)",
+      "code": "MA36"
+    },
+    {
+      "name": "Remote Aggregated Events (MA39)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-remote-aggregated-events.htm",
+      "category": "soccer",
+      "description": "Documentación para Remote Aggregated Events (MA39)",
+      "code": "MA39"
+    },
+    {
+      "name": "In-Venue Aggregated Events (MA40)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-invenue-aggregated-events.htm",
+      "category": "soccer",
+      "description": "Documentación para In-Venue Aggregated Events (MA40)",
+      "code": "MA40"
+    },
+    {
+      "name": "Remote Pressure Timelines (MA41)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-remote-pressure-timelines.htm",
+      "category": "soccer",
+      "description": "Documentación para Remote Pressure Timelines (MA41)",
+      "code": "MA41"
+    },
+    {
+      "name": "In-Venue Pressure Timelines (MA42)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-in-venue-pressure-timelines.htm",
+      "category": "soccer",
+      "description": "Documentación para In-Venue Pressure Timelines (MA42)",
+      "code": "MA42"
+    },
+    {
+      "name": "Match Playtime (MA43)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-playtime.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Playtime (MA43)",
+      "code": "MA43"
+    },
+    {
+      "name": "Remote Aggregated Fitness (MA44)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-remote-aggregated-fitness.htm",
+      "category": "soccer",
+      "description": "Documentación para Remote Aggregated Fitness (MA44)",
+      "code": "MA44"
+    },
+    {
+      "name": "In-Venue Aggregated Fitness (MA45)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-in-venue-aggregated-fitness.htm",
+      "category": "soccer",
+      "description": "Documentación para In-Venue Aggregated Fitness (MA45)",
+      "code": "MA45"
+    },
+    {
+      "name": "Match Provisional LineUps (MA46)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-provisional-linup.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Provisional LineUps (MA46)",
+      "code": "MA46"
+    },
+    {
+      "name": "Match Corners Preview (MA47)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-corners-preview.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Corners Preview (MA47)",
+      "code": "MA47"
+    },
+    {
+      "name": "Remote Match Tracking EPTS (MA49)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-remote-tracking-epts.htm",
+      "category": "soccer",
+      "description": "Documentación para Remote Match Tracking EPTS (MA49)",
+      "code": "MA49"
+    },
+    {
+      "name": "Manager Preview (MA50)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-manager-preview.htm",
+      "category": "soccer",
+      "description": "Documentación para Manager Preview (MA50)",
+      "code": "MA50"
+    },
+    {
+      "name": "In-Venue Player Shape (MA51)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-in-venue-player-shape.html",
+      "category": "soccer",
+      "description": "Documentación para In-Venue Player Shape (MA51)",
+      "code": "MA51"
+    },
+    {
+      "name": "Remote Player Shape (MA52)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-remote-player-shape.htm",
+      "category": "soccer",
+      "description": "Documentación para Remote Player Shape (MA52)",
+      "code": "MA52"
+    },
+    {
+      "name": "Match Stream (MA53)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-stream.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Stream (MA53)",
+      "code": "MA53"
+    },
+    {
+      "name": "In-Venue Aggregated Runs (MA54)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-in-venue-aggregated-runs.htm",
+      "category": "soccer",
+      "description": "Documentación para In-Venue Aggregated Runs (MA54)",
+      "code": "MA54"
+    },
+    {
+      "name": "Remote Aggregated Runs (MA55)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-remote-aggregated-runs.htm",
+      "category": "soccer",
+      "description": "Documentación para Remote Aggregated Runs (MA55)",
+      "code": "MA55"
+    },
+    {
+      "name": "In-Venue Aggregated Phases (MA56)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-in-venue-aggregated-phases.htm",
+      "category": "soccer",
+      "description": "Documentación para In-Venue Aggregated Phases (MA56)",
+      "code": "MA56"
+    },
+    {
+      "name": "Remote Aggregated Phases (MA57)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-remote-aggregated-phases.htm",
+      "category": "soccer",
+      "description": "Documentación para Remote Aggregated Phases (MA57)",
+      "code": "MA57"
+    },
+    {
+      "name": "In-Venue Player Runs (MA58)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-in-venues-player-runs.html",
+      "category": "soccer",
+      "description": "Documentación para In-Venue Player Runs (MA58)",
+      "code": "MA58"
+    },
+    {
+      "name": "Remote Player Runs (MA59)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-remote-player-runs.html",
+      "category": "soccer",
+      "description": "Documentación para Remote Player Runs (MA59)",
+      "code": "MA59"
+    },
+    {
+      "name": "In-Venue Phases of Play (MA60)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-in-venue-phases-of-play.htm",
+      "category": "soccer",
+      "description": "Documentación para In-Venue Phases of Play (MA60)",
+      "code": "MA60"
+    },
+    {
+      "name": "Remote Phases of Play (MA61)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-remote-phases-of-play.htm",
+      "category": "soccer",
+      "description": "Documentación para Remote Phases of Play (MA61)",
+      "code": "MA61"
+    },
+    {
+      "name": "Match Reference (MAR)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-reference.htm",
+      "category": "soccer",
+      "description": "Documentación para Match Reference (MAR)"
+    },
+    {
+      "name": "ID Mappings (MAP)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-id-mappings.htm",
+      "category": "soccer",
+      "description": "Documentación para ID Mappings (MAP)"
+    },
+    {
+      "name": "Mappings (MAP)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-mappings.htm",
+      "category": "soccer",
+      "description": "Documentación para Mappings (MAP)"
+    },
+    {
+      "name": "Deletions (DEL)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-deletions.htm",
+      "category": "soccer",
+      "description": "Documentación para Deletions (DEL)"
+    },
+    {
+      "name": "Decode (DEC)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-decode.htm",
+      "category": "soccer",
+      "description": "Documentación para Decode (DEC)"
+    },
+    {
+      "name": "Tournament Calendars (OT2)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-tournament-calendars.htm",
+      "category": "soccer",
+      "description": "Documentación para Tournament Calendars (OT2)",
+      "code": "OT2"
+    },
+    {
+      "name": "Venues (OT3)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-venues.htm",
+      "category": "soccer",
+      "description": "Documentación para Venues (OT3)",
+      "code": "OT3"
+    },
+    {
+      "name": "Areas (OT4)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-areas.htm",
+      "category": "soccer",
+      "description": "Documentación para Areas (OT4)",
+      "code": "OT4"
+    },
+    {
+      "name": "Player Career (PE2)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-player-career.htm",
+      "category": "soccer",
+      "description": "Documentación para Player Career (PE2)",
+      "code": "PE2"
+    },
+    {
+      "name": "Referees (PE3)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-referees.htm",
+      "category": "soccer",
+      "description": "Documentación para Referees (PE3)",
+      "code": "PE3"
+    },
+    {
+      "name": "Rankings (PE4)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-rankings.htm",
+      "category": "soccer",
+      "description": "Documentación para Rankings (PE4)",
+      "code": "PE4"
+    },
+    {
+      "name": "Top Performers (PE6)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-top-performers.htm",
+      "category": "soccer",
+      "description": "Documentación para Top Performers (PE6)",
+      "code": "PE6"
+    },
+    {
+      "name": "Injuries (PE7)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-injuries.htm",
+      "category": "soccer",
+      "description": "Documentación para Injuries (PE7)",
+      "code": "PE7"
+    },
+    {
+      "name": "Suspensions (PE8)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-suspensions.htm",
+      "category": "soccer",
+      "description": "Documentación para Suspensions (PE8)",
+      "code": "PE8"
+    },
+    {
+      "name": "NLG Dynamic Player Bios (PE9)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-nlg-dynamic-player-bios.htm",
+      "category": "soccer",
+      "description": "Documentación para NLG Dynamic Player Bios (PE9)",
+      "code": "PE9"
+    },
+    {
+      "name": "Player Possession Value (PE10)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-player-possession.htm",
+      "category": "soccer",
+      "description": "Documentación para Player Possession Value (PE10)",
+      "code": "PE10"
+    },
+    {
+      "name": "Player Contract (PE12)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-player-contract.htm",
+      "category": "soccer",
+      "description": "Documentación para Player Contract (PE12)",
+      "code": "PE12"
+    },
+    {
+      "name": "Referee Stats (PE13)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-referee-stats.htm",
+      "category": "soccer",
+      "description": "Documentación para Referee Stats (PE13)",
+      "code": "PE13"
+    },
+    {
+      "name": "Season Points Rankings (PE14)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-season-points-rankings.htm",
+      "category": "soccer",
+      "description": "Documentación para Season Points Rankings (PE14)",
+      "code": "PE14"
+    },
+    {
+      "name": "Insights (TDM1)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-tdm1-insights.html",
+      "category": "soccer",
+      "description": "Documentación para Insights (TDM1)",
+      "code": "TDM1"
+    },
+    {
+      "name": "Aggregates (TDM2)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-tdm2-aggregates.html",
+      "category": "soccer",
+      "description": "Documentación para Aggregates (TDM2)",
+      "code": "TDM2"
+    },
+    {
+      "name": "Teams (TM1)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-teams.htm",
+      "category": "soccer",
+      "description": "Documentación para Teams (TM1)",
+      "code": "TM1"
+    },
+    {
+      "name": "Team Standings (TM2)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-team-standings.htm",
+      "category": "soccer",
+      "description": "Documentación para Team Standings (TM2)",
+      "code": "TM2"
+    },
+    {
+      "name": "Squads (TM3)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-squads.htm",
+      "category": "soccer",
+      "description": "Documentación para Squads (TM3)",
+      "code": "TM3"
+    },
+    {
+      "name": "Seasonal Stats (TM4)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-seasonal-stats.htm",
+      "category": "soccer",
+      "description": "Documentación para Seasonal Stats (TM4)",
+      "code": "TM4"
+    },
+    {
+      "name": "Transfers (TM7)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-transfers.htm",
+      "category": "soccer",
+      "description": "Documentación para Transfers (TM7)",
+      "code": "TM7"
+    },
+    {
+      "name": "Trophies (TM8)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-trophies.htm",
+      "category": "soccer",
+      "description": "Documentación para Trophies (TM8)",
+      "code": "TM8"
+    },
+    {
+      "name": "Season Expected Goals (TM9)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-season-expected-goals.htm",
+      "category": "soccer",
+      "description": "Documentación para Season Expected Goals (TM9)",
+      "code": "TM9"
+    },
+    {
+      "name": "Season Player Ratings (TM10)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-season-player-ratings.htm",
+      "category": "soccer",
+      "description": "Documentación para Season Player Ratings (TM10)",
+      "code": "TM10"
+    },
+    {
+      "name": "Tournament Simulations (TM11)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-tournament-simulations.htm",
+      "category": "soccer",
+      "description": "Documentación para Tournament Simulations (TM11)",
+      "code": "TM11"
+    },
+    {
+      "name": "Season Simulations (TM12)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-season-simulations.htm",
+      "category": "soccer",
+      "description": "Documentación para Season Simulations (TM12)",
+      "code": "TM12"
+    },
+    {
+      "name": "Season Power Rankings (TM14) ",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-season-power-ratings.html",
+      "category": "soccer",
+      "description": "Documentación para Season Power Rankings (TM14) ",
+      "code": "TM14"
+    },
+    {
+      "name": " Team and Player Forecast (TM15)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-team-player-forecast.htm",
+      "category": "soccer",
+      "description": "Documentación para  Team and Player Forecast (TM15)",
+      "code": "TM15"
+    },
+    {
+      "name": " Team and Player Prediction (TM15_SP)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-team-player-prediction.htm",
+      "category": "soccer",
+      "description": "Documentación para  Team and Player Prediction (TM15_SP)"
+    },
+    {
+      "name": "Contestant Participation (TM16) ",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-contestant-participation.htm",
+      "category": "soccer",
+      "description": "Documentación para Contestant Participation (TM16) ",
+      "code": "TM16"
+    },
+    {
+      "name": "Season Playtime (TM17)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-season-playtime.htm",
+      "category": "soccer",
+      "description": "Documentación para Season Playtime (TM17)",
+      "code": "TM17"
+    },
+    {
+      "name": "Season And Tournament Simulations (TM18)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-season-and-tournament-simulations.htm",
+      "category": "soccer",
+      "description": "Documentación para Season And Tournament Simulations (TM18)",
+      "code": "TM18"
+    },
+    {
+      "name": "Tournament Calendar Reference (TMR)",
+      "url": "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-tournament-calendar-reference.htm",
+      "category": "soccer",
+      "description": "Documentación para Tournament Calendar Reference (TMR)"
+    }
+  ]
+}

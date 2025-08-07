@@ -9,6 +9,7 @@ export interface OptaEndpoint {
   description?: string;
   category: string;
   content?: string;
+  code?: string;
 }
 
 export interface OptaDocumentation {

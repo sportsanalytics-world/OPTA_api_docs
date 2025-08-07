@@ -36,6 +36,10 @@ async function runAgentAnalysis() {
 
     const { analysis } = analysisResult;
     
+    if (!analysis) {
+      return { success: false, error: 'Analysis failed' };
+    }
+    
     // Step 2: Generate tests for new endpoints
     if (analysis.newEndpoints.length > 0) {
       console.log('\n🧪 Step 2: Generating tests for new endpoints...');
@@ -71,7 +75,7 @@ async function runAgentAnalysis() {
 
     // Step 4: Generate comprehensive report
     console.log('\n📊 Step 4: Generating comprehensive report...');
-    const comprehensiveReport = generateComprehensiveReport(analysis, analysisResult.reportPath);
+    const comprehensiveReport = generateComprehensiveReport(analysis, analysisResult.reportPath || 'analysis-report.md');
     
     const reportPath = path.join(process.cwd(), 'agent-analysis-report.md');
     fs.writeFileSync(reportPath, comprehensiveReport);
@@ -83,14 +87,19 @@ async function runAgentAnalysis() {
       analysis,
       newEndpointsCount: analysis.newEndpoints.length,
       testsGenerated: analysis.newEndpoints.length,
-      reportPath
+      reportPath,
+      error: undefined
     };
 
   } catch (error) {
     console.error('❌ Error during agent analysis:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error',
+      analysis: undefined,
+      newEndpointsCount: 0,
+      testsGenerated: 0,
+      reportPath: ''
     };
   }
 }
@@ -210,11 +219,11 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     if (result.success) {
       console.log('\n🎉 Agent analysis completed successfully!');
       console.log(`📊 Found ${result.newEndpointsCount} new endpoints`);
-      console.log(`🧪 Generated ${result.testsGenerated} test files`);
+      console.log(`🧪 Generated ${(result as any).testsGenerated || 0} test files`);
       process.exit(0);
     } else {
       console.error('\n❌ Agent analysis failed!');
-      console.error(`Error: ${result.error}`);
+      console.error(`Error: ${(result as any).error || 'Unknown error'}`);
       process.exit(1);
     }
   });

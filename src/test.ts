@@ -20,7 +20,7 @@ async function testOptaConnection() {
   console.log('✅ Environment variables configured');
 
   // Create scraper instance
-  const scraper = new OptaScraper(credentials);
+  const scraper = new OptaScraper(credentials, 'https://docs.performgroup.com/docs/rh/sdapi');
   const docManager = new DocumentationManager(scraper);
 
   try {
@@ -37,7 +37,7 @@ async function testOptaConnection() {
 
     // Test endpoint scraping
     console.log('\n📄 Testing endpoint scraping...');
-    const testUrl = '/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-possession-events.htm';
+    const testUrl = '/Topics/soccer/opta-sdapi-soccer-api-possession-events.htm';
     const scrapingResult = await scraper.scrapeEndpoint(testUrl);
     
     if (scrapingResult.success) {

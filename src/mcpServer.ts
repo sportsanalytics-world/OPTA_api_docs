@@ -6,19 +6,14 @@ import {
   Tool,
 } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
-import { DocumentationManager } from './services/documentationManager.js';
-import { OptaScraper } from './services/optaScraper.js';
+import axios from 'axios';
+import * as cheerio from 'cheerio';
 import { OptaCredentials } from './types/index.js';
 
 const server = new Server(
   {
     name: 'opta-api-docs-mcp',
     version: '1.0.0',
-  },
-  {
-    capabilities: {
-      tools: {},
-    },
   }
 );
 
@@ -30,67 +25,24 @@ const credentials: OptaCredentials = {
 
 const baseUrl = process.env.OPTA_DOCS_BASE_URL || 'https://docs.performgroup.com';
 
-// Initialize services
-const scraper = new OptaScraper(credentials, baseUrl);
-const docManager = new DocumentationManager(scraper);
-
 // MCP Tools
 const tools: Tool[] = [
   {
-    name: 'search_opta_documentation',
-    description: 'Search in OPTA API documentation for specific terms',
+    name: 'get_endpoint_documentation',
+    description: 'Get the HTML documentation content for a specific OPTA endpoint and answer questions about it',
     inputSchema: {
       type: 'object',
       properties: {
-        query: {
+        endpoint_code: {
           type: 'string',
-          description: 'Search terms to find in documentation',
+          description: 'The endpoint code (e.g., MA13, MA1, PE2, etc.)',
+        },
+        question: {
+          type: 'string',
+          description: 'Question about the endpoint documentation (e.g., "What is the overview?", "What are the parameters?", etc.)',
         },
       },
-      required: ['query'],
-    },
-  },
-  {
-    name: 'get_endpoint_details',
-    description: 'Get complete details of a specific OPTA endpoint',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        url: {
-          type: 'string',
-          description: 'URL of the OPTA endpoint',
-        },
-      },
-      required: ['url'],
-    },
-  },
-  {
-    name: 'list_all_endpoints',
-    description: 'List all available endpoints in OPTA documentation',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        category: {
-          type: 'string',
-          description: 'Optional category to filter endpoints (e.g., soccer)',
-        },
-      },
-    },
-  },
-  {
-    name: 'refresh_documentation_cache',
-    description: 'Update OPTA documentation cache',
-    inputSchema: {
-      type: 'object',
-      properties: {},
-    },
-  },
-  {
-    name: 'get_cache_status',
-    description: 'Get current status of documentation cache',
-    inputSchema: {
-      type: 'object',
-      properties: {},
+      required: ['endpoint_code', 'question'],
     },
   },
 ];
@@ -106,146 +58,127 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
   try {
     switch (name) {
-      case 'search_opta_documentation': {
-        const { query } = z.object({ query: z.string() }).parse(args);
+      case 'get_endpoint_documentation': {
+        const { endpoint_code, question } = z.object({ 
+          endpoint_code: z.string(),
+          question: z.string()
+        }).parse(args);
         
-        console.log(`Searching: "${query}"`);
-        const results = await docManager.searchDocumentation(query);
+        console.log(`Getting documentation for endpoint: ${endpoint_code}`);
+        console.log(`Question: ${question}`);
         
-        if (results.length === 0) {
+        // Buscar el endpoint en el archivo JSON
+        const fs = await import('fs');
+        const path = await import('path');
+        // Usar ruta relativa desde el directorio de trabajo actual
+        const endpointsFile = path.join(process.cwd(), 'processed-endpoints.json');
+        
+        if (!fs.existsSync(endpointsFile)) {
           return {
             content: [
               {
                 type: 'text',
-                text: `No results found for "${query}"`,
+                text: 'Error: processed-endpoints.json not found. Run npm run process:endpoints first.',
               },
             ],
           };
         }
 
-        const resultText = results
-          .slice(0, 10) // Limit to 10 results
-          .map((result, index) => {
-            const endpoint = result.endpoint;
-            return `${index + 1}. **${endpoint.name}** (Relevance: ${result.relevance})
-   - URL: ${endpoint.url}
-   - Category: ${endpoint.category}
-   - Description: ${endpoint.description || 'Not available'}
-   - Matched terms: ${result.matchedTerms.join(', ')}
-   
-   ${endpoint.content ? endpoint.content.substring(0, 500) + '...' : 'No content available'}
-   
-   ---`;
-          })
-          .join('\n\n');
-
-        return {
-          content: [
-            {
-              type: 'text',
-              text: `**Search results for "${query}":**\n\n${resultText}`,
-            },
-          ],
-        };
-      }
-
-      case 'get_endpoint_details': {
-        const { url } = z.object({ url: z.string() }).parse(args);
-        
-        console.log(`Getting endpoint details: ${url}`);
-        const endpoint = await docManager.getEndpointByUrl(url);
+        const endpointsData = JSON.parse(fs.readFileSync(endpointsFile, 'utf-8'));
+        const endpoint = endpointsData.endpoints.find((ep: any) => ep.code === endpoint_code);
         
         if (!endpoint) {
           return {
             content: [
               {
                 type: 'text',
-                text: `Endpoint not found with URL: ${url}`,
+                text: `Endpoint ${endpoint_code} not found. Available endpoints: ${endpointsData.endpoints.map((ep: any) => ep.code).filter(Boolean).join(', ')}`,
               },
             ],
           };
         }
 
-        return {
-          content: [
-            {
-              type: 'text',
-              text: `**${endpoint.name}**
-              
-**URL:** ${endpoint.url}
-**Category:** ${endpoint.category}
-**Description:** ${endpoint.description || 'Not available'}
-
-**Complete content:**
-${endpoint.content || 'No content available'}`,
-            },
-          ],
-        };
-      }
-
-      case 'list_all_endpoints': {
-        const { category } = z.object({ category: z.string().optional() }).parse(args);
+        // Get the HTML content of the endpoint
+        const fullUrl = `${baseUrl}${endpoint.url}`;
+        console.log(`Fetching: ${fullUrl}`);
         
-        console.log(`Listing endpoints${category ? ` in category: ${category}` : ''}`);
-        const endpoints = category 
-          ? await docManager.getEndpointsByCategory(category)
-          : (await docManager.getDocumentation()).endpoints;
-        
-        if (endpoints.length === 0) {
+        const response = await axios.get(fullUrl, {
+          auth: {
+            username: credentials.username,
+            password: credentials.password,
+          },
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+          },
+          timeout: 30000,
+        });
+
+        if (response.status !== 200) {
           return {
             content: [
               {
                 type: 'text',
-                text: `No endpoints found${category ? ` in category "${category}"` : ''}`,
+                text: `Error: Could not fetch endpoint documentation. Status: ${response.status}`,
               },
             ],
           };
         }
 
-        const endpointsText = endpoints
-          .map((endpoint, index) => {
-            return `${index + 1}. **${endpoint.name}**
-   - URL: ${endpoint.url}
-   - Category: ${endpoint.category}
-   - Description: ${endpoint.description || 'Not available'}`;
-          })
-          .join('\n\n');
-
-        return {
-          content: [
-            {
-              type: 'text',
-              text: `**Available endpoints${category ? ` in category "${category}"` : ''}:**\n\n${endpointsText}`,
-            },
-          ],
-        };
-      }
-
-      case 'refresh_documentation_cache': {
-        console.log('Updating documentation cache...');
-        await docManager.refreshCache();
+        // Parsear el HTML
+        const $ = cheerio.load(response.data);
         
-        return {
-          content: [
-            {
-              type: 'text',
-              text: 'Documentation cache updated successfully.',
-            },
-          ],
-        };
-      }
-
-      case 'get_cache_status': {
-        const status = docManager.getCacheStatus();
+        // Extraer el contenido principal
+        const title = $('title').text().trim();
+        const mainContent = $('body').text().trim();
         
+        // Clean content (remove extra spaces, multiple line breaks)
+        const cleanContent = mainContent
+          .replace(/\s+/g, ' ')
+          .replace(/\n\s*\n/g, '\n')
+          .trim();
+
+        // Responder basado en la pregunta
+        let answer = '';
+        
+                  if (question.toLowerCase().includes('overview') || question.toLowerCase().includes('what is')) {
+          // Find the first significant paragraph as overview
+          const paragraphs = $('p');
+          for (let i = 0; i < paragraphs.length; i++) {
+            const text = $(paragraphs[i]).text().trim();
+            if (text.length > 100 && !text.includes('©') && !text.includes('Copyright')) {
+              answer = `**Overview de ${endpoint.name} (${endpoint_code}):**\n\n${text}`;
+              break;
+            }
+          }
+          if (!answer) {
+            answer = `**Overview de ${endpoint.name} (${endpoint_code}):**\n\n${cleanContent.substring(0, 500)}...`;
+          }
+                  } else if (question.toLowerCase().includes('parameters')) {
+          // Search for parameter sections
+                      const paramSections = $('*:contains("Parameters")');
+          if (paramSections.length > 0) {
+                          answer = `**Parameters of ${endpoint.name} (${endpoint_code}):**\n\n${paramSections.first().text().trim()}`;
+          } else {
+                          answer = `No specific parameter sections found for ${endpoint.name} (${endpoint_code}).`;
+          }
+        } else if (question.toLowerCase().includes('ejemplos') || question.toLowerCase().includes('examples')) {
+          // Buscar secciones de ejemplos
+          const exampleSections = $('*:contains("Examples"), *:contains("Ejemplos"), *:contains("Example")');
+          if (exampleSections.length > 0) {
+            answer = `**Ejemplos de ${endpoint.name} (${endpoint_code}):**\n\n${exampleSections.first().text().trim()}`;
+          } else {
+                          answer = `No specific examples sections found for ${endpoint.name} (${endpoint_code}).`;
+          }
+        } else {
+          // Respuesta general con el contenido completo
+                      answer = `**Documentation of ${endpoint.name} (${endpoint_code}):**\n\n${cleanContent.substring(0, 2000)}${cleanContent.length > 2000 ? '...' : ''}`;
+        }
+
         return {
           content: [
             {
               type: 'text',
-              text: `**Cache status:**
-- Has cache: ${status.hasCache ? 'Yes' : 'No'}
-- Cache expired: ${status.isExpired ? 'Yes' : 'No'}
-- Last updated: ${status.lastUpdated ? status.lastUpdated.toISOString() : 'N/A'}`,
+              text: answer,
             },
           ],
         };
@@ -288,20 +221,11 @@ async function main() {
     process.exit(1);
   }
 
-  // Verify authentication
-  console.log('Verifying authentication with OPTA...');
-  const isAuthenticated = await scraper.authenticate();
-  
-  if (!isAuthenticated) {
-    console.error('Error: Could not authenticate with OPTA credentials');
-    process.exit(1);
-  }
-
-  console.log('Authentication successful with OPTA');
+  console.log('MCP server started and ready to receive connections');
   
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.log('MCP server started and ready to receive connections');
+  console.log('MCP server connected and ready');
 }
 
 main().catch((error) => {

@@ -24,7 +24,7 @@ export class OptaScraper {
   async authenticate(): Promise<boolean> {
     try {
       // Try to access a protected page to verify authentication
-      const response = await this.client.get('/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-possession-events.htm', {
+      const response = await this.client.get('/Topics/soccer/opta-sdapi-soccer-api-possession-events.htm', {
         auth: {
           username: this.credentials.username,
           password: this.credentials.password
@@ -84,25 +84,25 @@ export class OptaScraper {
       discoveredEndpoints = [
         {
           name: 'Soccer API Possession Events',
-          url: '/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-possession-events.htm',
+          url: '/Topics/soccer/opta-sdapi-soccer-api-possession-events.htm',
           category: 'soccer',
           description: 'API for football possession events'
         },
         {
           name: 'Soccer API Match Events',
-          url: '/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-match-events.htm',
+          url: '/Topics/soccer/opta-sdapi-soccer-api-match-events.htm',
           category: 'soccer',
           description: 'API for football match events'
         },
         {
           name: 'Soccer API Player Statistics',
-          url: '/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-player-statistics.htm',
+          url: '/Topics/soccer/opta-sdapi-soccer-api-player-statistics.htm',
           category: 'soccer',
           description: 'API for player statistics'
         },
         {
           name: 'Soccer API Team Statistics',
-          url: '/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-team-statistics.htm',
+          url: '/Topics/soccer/opta-sdapi-soccer-api-team-statistics.htm',
           category: 'soccer',
           description: 'API for team statistics'
         }
