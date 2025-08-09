@@ -13,6 +13,13 @@ import { OptaCredentials } from './types/index.js';
 import { HtmlCacheManager } from './services/htmlCacheManager.js';
 import { randomUUID } from 'node:crypto';
 
+// In STDIO mode, redirect console.log to stderr to avoid writing non-MCP data to stdout
+const isStdioMode = !process.env.PORT && !process.env.MCP_PORT;
+if (isStdioMode) {
+  // eslint-disable-next-line no-console
+  console.log = (...args: unknown[]) => console.error(...args);
+}
+
 // Initialize HTML cache manager
 const htmlCacheManager = new HtmlCacheManager();
 
@@ -310,8 +317,48 @@ async function main() {
 
     const http = await import('http');
     const httpServer = http.createServer(async (req, res) => {
+      if (req.url === '/health') {
+        // Simple health check endpoint
+        if (req.method === 'HEAD') {
+          res.writeHead(200).end();
+          return;
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(
+          JSON.stringify({
+            status: 'ok',
+            name: 'opta-api-docs-mcp',
+            version: '1.0.0',
+            time: new Date().toISOString(),
+            uptimeSeconds: Math.floor(process.uptime()),
+            cache: htmlCacheManager.getCacheStatus(),
+          })
+        );
+        return;
+      }
       if (req.url === '/mcp') {
         try {
+          // Normalize Accept header for broader client compatibility
+          const originalAccept = req.headers['accept'] as string | undefined;
+          if (req.method === 'POST') {
+            const parts = (originalAccept ?? '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
+            const needJson = !parts.includes('application/json');
+            const needSse = !parts.includes('text/event-stream');
+            if (needJson || needSse) {
+              const combined = new Set(parts);
+              if (needJson) combined.add('application/json');
+              if (needSse) combined.add('text/event-stream');
+              req.headers['accept'] = Array.from(combined).join(', ');
+              console.log(`[HTTP COMPAT] Normalized Accept header for POST: "${originalAccept}" -> "${req.headers['accept']}"`);
+            }
+          } else if (req.method === 'GET') {
+            const hasSse = (originalAccept ?? '').toLowerCase().includes('text/event-stream');
+            if (!hasSse) {
+              req.headers['accept'] = 'text/event-stream';
+              console.log(`[HTTP COMPAT] Added SSE Accept header for GET: "${originalAccept}" -> "${req.headers['accept']}"`);
+            }
+          }
+
           await transport.handleRequest(req as any, res as any);
         } catch (err) {
           console.error('HTTP /mcp error:', err);
