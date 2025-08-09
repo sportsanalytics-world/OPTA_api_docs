@@ -164,9 +164,6 @@ class EndpointExplorer {
     console.log('\n🧪 Probando endpoints conocidos...\n');
     
     const knownEndpoints = [
-      '/Topics/soccer/opta-sdapi-soccer-api-possession-events.htm',
-      '/Topics/soccer/opta-sdapi-soccer-api-match-events.htm',
-      '/Topics/soccer/opta-sdapi-soccer-api-player-statistics.htm',
       '/docs/rh/sdapi/soccer/Topics/opta-sdapi-soccer-api-possession-events.htm',
       '/docs/rh/sdapi/soccer/Topics/opta-sdapi-soccer-api-match-events.htm'
     ];

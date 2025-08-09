@@ -66,9 +66,6 @@ class OptaEndpointProcessor {
   }
 
   private normalizeUrl(href: string): string {
-    // Las URLs en el HTML son relativas como "../../Topics/soccer/opta-sdapiamp-soccer-api-possession-events.htm"
-    // Necesitamos convertirlas a rutas absolutas como "/docs/rh/sdapi/Topics/soccer/opta-sdapi-soccer-api-possession-events.htm"
-    
     if (href.startsWith('../../')) {
       let url = href.replace('../../', '/docs/rh/sdapi/');
       // Corregir el "amp" extra en las URLs

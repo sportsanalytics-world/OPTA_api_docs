@@ -34,7 +34,7 @@ Edita el archivo `.env` con tus credenciales de OPTA:
 ```env
 OPTA_USERNAME=tu_usuario_aqui
 OPTA_PASSWORD=tu_password_aqui
-OPTA_DOCS_BASE_URL=https://docs.performgroup.com/docs/rh/sdapi
+OPTA_DOCS_BASE_URL=https://docs.performgroup.com
 ```
 
 ## Uso
