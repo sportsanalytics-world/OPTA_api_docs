@@ -54,6 +54,15 @@ const server = new Server(
               required: ['endpoint_code', 'question'],
             },
           },
+          {
+            name: 'list_endpoints',
+            description: 'List all available OPTA endpoints (code, name, url) from processed-endpoints.json',
+            inputSchema: {
+              type: 'object',
+              properties: {},
+              required: [],
+            },
+          },
         ],
       },
     },
@@ -86,6 +95,15 @@ const tools: Tool[] = [
         },
       },
       required: ['endpoint_code', 'question'],
+    },
+  },
+  {
+    name: 'list_endpoints',
+    description: 'List all available OPTA endpoints (code, name, url) from processed-endpoints.json',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+      required: [],
     },
   },
 ];
@@ -263,6 +281,43 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             {
               type: 'text',
               text: answer,
+            },
+          ],
+        };
+      }
+
+      case 'list_endpoints': {
+        const fs = await import('fs');
+        const path = await import('path');
+        const { fileURLToPath } = await import('url');
+
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = path.dirname(__filename);
+        const endpointsFile = path.join(__dirname, 'processed-endpoints.json');
+
+        if (!fs.existsSync(endpointsFile)) {
+          return {
+            content: [
+              {
+                type: 'text',
+                text: 'Error: processed-endpoints.json not found. Run npm run process:endpoints first.',
+              },
+            ],
+          };
+        }
+
+        const endpointsData = JSON.parse(fs.readFileSync(endpointsFile, 'utf-8'));
+        const items = (endpointsData.endpoints || []).map((ep: any) => ({
+          code: ep.code || '',
+          name: ep.name || '',
+          url: ep.url || '',
+        }));
+
+        return {
+          content: [
+            {
+              type: 'text',
+              text: JSON.stringify({ total: items.length, endpoints: items }, null, 2),
             },
           ],
         };
