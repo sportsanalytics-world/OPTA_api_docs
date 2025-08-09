@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp src/processed-endpoints.json dist/",
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts",
     "test": "jest",

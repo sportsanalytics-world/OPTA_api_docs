@@ -1,5 +1,6 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -9,6 +10,14 @@ import { z } from 'zod';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { OptaCredentials } from './types/index.js';
+import { HtmlCacheManager } from './services/htmlCacheManager.js';
+import { randomUUID } from 'node:crypto';
+
+// Initialize HTML cache manager
+const htmlCacheManager = new HtmlCacheManager();
+
+console.log('[MCP SERVER] Starting MCP server with HTML cache support');
+console.log('[MCP SERVER] Cache manager initialized:', htmlCacheManager.getCacheStatus());
 
 const server = new Server(
   {
@@ -94,13 +103,30 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         console.log(`Getting documentation for endpoint: ${endpoint_code}`);
         console.log(`Question: ${question}`);
         
+        console.log(`[CACHE DEBUG] === CACHE DEBUG START ===`);
+        console.log(`[CACHE DEBUG] Endpoint code: ${endpoint_code}`);
+        console.log(`[CACHE DEBUG] HtmlCacheManager instance:`, htmlCacheManager ? 'EXISTS' : 'NULL');
+        
         // Buscar el endpoint en el archivo JSON
         const fs = await import('fs');
         const path = await import('path');
-        // Usar ruta relativa desde el directorio de trabajo actual
-        const endpointsFile = path.join(process.cwd(), 'processed-endpoints.json');
+        const { fileURLToPath } = await import('url');
+        
+        // Obtener la ruta del directorio actual del módulo
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = path.dirname(__filename);
+        
+        // Usar ruta absoluta basada en __dirname para asegurar que funcione desde cualquier directorio
+        // El archivo se copia a dist/ durante el build, así que está en la misma ubicación que el servidor
+        const endpointsFile = path.join(__dirname, 'processed-endpoints.json');
+        
+        console.log(`[DEBUG] Looking for endpoints file at: ${endpointsFile}`);
+        console.log(`[DEBUG] __dirname: ${__dirname}`);
+        console.log(`[DEBUG] File exists: ${fs.existsSync(endpointsFile)}`);
         
         if (!fs.existsSync(endpointsFile)) {
+          console.log(`[DEBUG] File not found! Current working directory: ${process.cwd()}`);
+          console.log(`[DEBUG] Files in __dirname:`, fs.readdirSync(__dirname));
           return {
             content: [
               {
@@ -125,34 +151,58 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           };
         }
 
-        // Get the HTML content of the endpoint
-        const fullUrl = `${baseUrl}${endpoint.url}`;
-        console.log(`Fetching: ${fullUrl}`);
-        
-        const response = await axios.get(fullUrl, {
-          auth: {
-            username: credentials.username,
-            password: credentials.password,
-          },
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
-          },
-          timeout: 30000,
-        });
+                // Try to get HTML content from cache first
+                const fullUrl = `${baseUrl}${endpoint.url}`;
+                let htmlContent = null;
+                let $;
+                
+                // Try cache first
+                try {
+                    htmlContent = await htmlCacheManager.getCachedHtml(endpoint_code);
+                } catch (error) {
+                    console.log(`[CACHE DEBUG] Error checking cache:`, error);
+                }
+                
+                if (htmlContent) {
+                    // Use cached content
+                    $ = cheerio.load(htmlContent);
+                } else {
+                    // Cache miss, fetch from OPTA
+                    console.log(`Cache miss for endpoint: ${endpoint_code}, fetching from OPTA...`);
+                    console.log(`Fetching: ${fullUrl}`);
+                    const response = await axios.get(fullUrl, {
+                        auth: {
+                            username: credentials.username,
+                            password: credentials.password,
+                        },
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+                        },
+                        timeout: 30000,
+                    });
 
-        if (response.status !== 200) {
-          return {
-            content: [
-              {
-                type: 'text',
-                text: `Error: Could not fetch endpoint documentation. Status: ${response.status}`,
-              },
-            ],
-          };
-        }
+                    if (response.status !== 200) {
+                        return {
+                            content: [
+                                {
+                                    type: 'text',
+                                    text: `Error: Could not fetch endpoint documentation. Status: ${response.status}`,
+                                },
+                            ],
+                        };
+                    }
 
-        // Parsear el HTML
-        const $ = cheerio.load(response.data);
+                    // Cache the HTML content for future use
+                    console.log(`[CACHE DEBUG] Attempting to cache HTML for endpoint: ${endpoint_code}`);
+                    try {
+                        await htmlCacheManager.cacheHtml(endpoint_code, fullUrl, response.data);
+                    } catch (error) {
+                        console.log(`[CACHE DEBUG] Error caching HTML:`, error);
+                    }
+                    
+                    // Parse the HTML
+                    $ = cheerio.load(response.data);
+                }
         
         // Extraer el contenido principal
         const title = $('title').text().trim();
@@ -241,21 +291,51 @@ process.on('unhandledRejection', (reason, promise) => {
 // Initialize server
 async function main() {
   console.log('Starting OPTA documentation MCP server...');
-  
+
   // Verify credentials
   if (!credentials.username || !credentials.password) {
     console.error('Error: OPTA_USERNAME and OPTA_PASSWORD must be configured in environment variables');
     process.exit(1);
   }
 
-  console.log('MCP server started and ready to receive connections');
-  
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.log('MCP server connected and ready');
+  const port = process.env.PORT || process.env.MCP_PORT;
+  if (port) {
+    // Streamable HTTP transport (spec-compliant). Exposes full MCP over HTTP at /mcp
+    const transport = new StreamableHTTPServerTransport({
+      sessionIdGenerator: () => randomUUID(),
+      enableJsonResponse: true,
+    });
+
+    await server.connect(transport);
+
+    const http = await import('http');
+    const httpServer = http.createServer(async (req, res) => {
+      if (req.url === '/mcp') {
+        try {
+          await transport.handleRequest(req as any, res as any);
+        } catch (err) {
+          console.error('HTTP /mcp error:', err);
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Internal server error' }));
+        }
+      } else {
+        res.writeHead(404, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Not found' }));
+      }
+    });
+
+    httpServer.listen(Number(port), () => {
+      console.log(`HTTP MCP server listening on port ${port} at path /mcp`);
+    });
+  } else {
+    console.log('MCP server started for STDIO transport (local clients)');
+    const transport = new StdioServerTransport();
+    await server.connect(transport);
+    console.log('MCP server connected and ready');
+  }
 }
 
 main().catch((error) => {
   console.error('Error starting server:', error);
   process.exit(1);
-}); 
+});

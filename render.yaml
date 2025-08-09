@@ -12,5 +12,5 @@ services:
       - key: OPTA_PASSWORD
         sync: false
       - key: OPTA_DOCS_BASE_URL
-        value: https://docs.performgroup.com/docs/rh/sdapi
+        value: https://docs.performgroup.com
     autoDeploy: true
