@@ -308,10 +308,12 @@ async function main() {
   const port = process.env.PORT || process.env.MCP_PORT;
   if (port) {
     // Streamable HTTP transport (spec-compliant). Exposes full MCP over HTTP at /mcp
+    const httpStateful = (process.env.MCP_HTTP_STATEFUL ?? 'true').toLowerCase() === 'true';
     const transport = new StreamableHTTPServerTransport({
-      sessionIdGenerator: () => randomUUID(),
+      sessionIdGenerator: httpStateful ? () => randomUUID() : undefined,
       enableJsonResponse: true,
     });
+    console.log(`[HTTP MCP] Using ${httpStateful ? 'stateful' : 'stateless'} mode`);
 
     await server.connect(transport);
 
